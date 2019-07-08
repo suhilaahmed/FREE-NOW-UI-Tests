@@ -1,26 +1,20 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/code/UI-test/AndroidDemo/
+    working_directory: ~/code/FREE-NOW-UI-Tests/AndroidDemo/
     docker:
       - image: circleci/android:api-28-alpha
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout:
-          path: ~/code/UI-test/AndroidDemo/
-      - restore_cache:
-          key: jars-{{ checksum "AndroidDemo/build.gradle" }}-{{ checksum  "AndroidDemo/app/build.gradle" }}
+          path: ~/code/FREE-NOW-UI-Tests/AndroidDemo/
       - run:
          name: Chmod permissions
          command: sudo chmod +x AndroidDemo/gradlew
       - run:
           name: Download Dependencies
           command: AndroidDemo/gradlew tasks
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: jars-{{ checksum "AndroidDemo/build.gradle" }}-{{ checksum  "AndroidDemo/app/build.gradle" }}
       - run:
           name: Lists installed targets
           command: android list target
